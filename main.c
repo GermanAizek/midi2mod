@@ -4,25 +4,35 @@
 
 int main(int argc, char **argv)
 {
-    Midi midi;
-    Mod mod;
-    FILE *infile = fopen(argv[1], "rb");
-    FILE *outfile = fopen("test.mod", "wb");
-    int i;
+    FILE* infile;
+    fopen_s(&infile, argv[1], "rb");
+    FILE* outfile;
+    fopen_s(&outfile, "test.mod", "wb");
 
-    int read_status = read_midi_from_file(&midi, infile);
+    Midi midi;
+    if (read_midi_from_file(&midi, infile)) {
+        fclose(infile);
+        return 1;
+    }
     fclose(infile);
+
+
+    Mod mod;
+    int i;
 
     midi_to_mod(&mod, &midi);
 
-    for(i=0; i<128; i++) {
-        if(midi.patches[i].used)
+    for (i=0; i<128; i++) {
+        if (midi.patches[i].used) {
             printf("%d:\t%s\tmin: %d, max: %d\n", i, MIDI_PATCH_NAMES[i], midi.patches[i].min, midi.patches[i].max);
+        }
     }
 
     write_mod_file(&mod, outfile);
 
     destroy_midi(&midi);
+
+    fclose(outfile);
 
     return 0;
 }

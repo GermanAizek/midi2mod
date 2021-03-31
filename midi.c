@@ -65,7 +65,9 @@ read_midi_from_file(Midi *midi, FILE *infile)
 	int i;
 	int chan_patch[16];
 
-	read_midi_header(midi, infile);
+    if (read_midi_header(midi, infile)) {
+        return 1;
+    }
 
 	memset(midi->patches, 0, sizeof(midi->patches));
 	memset(chan_patch, 0, sizeof(chan_patch));
