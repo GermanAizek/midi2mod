@@ -1,0 +1,13 @@
+AC_PREREQ(2.59)
+
+AC_INIT([midi2mod], [0.01], [hncaldwell@csupomona.edu])
+
+AM_INIT_AUTOMAKE([1.9 foreign])
+
+AC_PROG_CC
+
+AC_CHECK_LIB([c], [main], [], AC_MSG_ERROR(requires libc))
+AC_CHECK_LIB([m], [main], [], AC_MSG_ERROR(requires libm))
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
