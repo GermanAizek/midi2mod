@@ -10,10 +10,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
-#include <arpa/inet.h>
-
 #include "midi.h"
 #include "stringcatalog.h"
+
+#ifdef _WIN32
+#include "winsock2.h"
+#else
+#include <arpa/inet.h>
+#endif
 
 const char *MIDI_NOTE_STRING[128] =
 	{"C,,,,", "C#,,,,", "D,,,,", "D#,,,,", "E,,,,", "F,,,,", "F#,,,,", "G,,,,", "G#,,,,", "A,,,,", "A#,,,,", "B,,,,",

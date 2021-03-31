@@ -7,11 +7,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <arpa/inet.h>
 #include <math.h>
-
 #include "midi.h"
 #include "mod.h"
+
+#ifdef _WIN32
+#include "winsock2.h"
+#else
+#include <arpa/inet.h>
+#endif
 
 int
 compare_absolute_midi_event(const void *a, const void *b)
