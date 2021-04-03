@@ -147,7 +147,7 @@ read_midi_track(MidiTrack *track, MidiPatch *patches, int chan_patch[16], FILE *
 	uint8_t MTrk[4];
 	uint32_t length;
 
-	uint32_t event_length;
+	int32_t event_length;
 	MidiEvent *event;
 
 	uint8_t *data;

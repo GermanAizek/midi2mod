@@ -37,9 +37,8 @@ typedef struct {
 } ModSample;
 
 typedef struct {
-	uint8_t sample;
 	uint16_t period;
-
+	uint8_t sample;
 	uint8_t effect;
 	uint8_t effect_x;
 	uint8_t effect_y;

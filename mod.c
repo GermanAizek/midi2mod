@@ -54,6 +54,12 @@ midi_to_mod(Mod *mod, const Midi *midi)
 	for(i=0; i < midi->num_tracks; i++) total_events += midi->tracks[i]->num_events;
 	events = calloc(total_events, sizeof(AbsoluteMidiEvent));
 
+	if (events == NULL) {
+		free(events);
+		fprintf(stderr, "Out of memory.\n");
+		return 1;
+	}
+
 	memset(mod->patterns, 0, sizeof(mod->patterns));
 
 	k = 0;
@@ -72,7 +78,6 @@ midi_to_mod(Mod *mod, const Midi *midi)
 	memset(midi_channel_sample, 0, sizeof(midi_channel_sample));
 
 	channel_occupied = calloc(mod->num_channels, sizeof(char));
-	memset(channel_occupied, 0, sizeof(channel_occupied));
 
 	current_pattern = 0;
 	for(i=0; i < total_events; i++) {
