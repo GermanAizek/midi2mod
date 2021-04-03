@@ -105,7 +105,7 @@ int read_midi_header(Midi *, FILE *);
 int read_midi_track(MidiTrack *, MidiPatch *, int chan_patch[16], FILE *);
 
 int get_midi_event(MidiEvent *, MidiPatch *, int chan_patch[16], const uint8_t *);
-int get_l_quantity(uint32_t *, const uint8_t *);
+int get_vl_quantity(uint32_t* q, const uint8_t* head);
 
 void destroy_midi(Midi *);
 void destroy_midi_track(MidiTrack *);

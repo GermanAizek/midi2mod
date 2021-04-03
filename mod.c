@@ -51,11 +51,12 @@ midi_to_mod(Mod *mod, const Midi *midi)
 	mod->num_channels = 8;
 
 	total_events = 0;
-	for(i=0; i < midi->num_tracks; i++) total_events += midi->tracks[i]->num_events;
+	for (i = 0; i < midi->num_tracks; i++) {
+		total_events += midi->tracks[i]->num_events;
+	}
 	events = calloc(total_events, sizeof(AbsoluteMidiEvent));
 
 	if (events == NULL) {
-		free(events);
 		fprintf(stderr, "Out of memory.\n");
 		return 1;
 	}
@@ -283,5 +284,7 @@ write_mod_file(Mod *mod, FILE *outfile)
 			fwrite(&v, sizeof(uint8_t), 1, outfile);
 		}
 	}
+
+	return 0;
 }
 

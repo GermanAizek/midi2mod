@@ -133,8 +133,14 @@ read_midi_header(Midi *midi, FILE *infile)
 	midi->division = division;
 	midi->num_tracks = num_tracks;
 	midi->tracks = calloc(num_tracks, sizeof(MidiTrack));
+	if (midi->tracks == NULL) {
+		fprintf(stderr, "Out of memory.\n");
+		return 1;
+	}
 
-	for(i=0; i < num_tracks; i++) midi->tracks[i] = NULL;
+	for (i = 0; i < num_tracks; i++) {
+		midi->tracks[i] = NULL;
+	}
 
 	return 0;
 }
@@ -173,6 +179,11 @@ read_midi_track(MidiTrack *track, MidiPatch *patches, int chan_patch[16], FILE *
 	length = ntohl(length);
 
 	data = calloc(length, sizeof(uint8_t));
+	if (data == NULL) {
+		fprintf(stderr, "Out of memory.\n");
+		return 1;
+	}
+
 	head = data;
 	if(!fread(data, sizeof(uint8_t), length, infile)) {
 		fprintf(stderr, "Unable to read track data.\n");
@@ -191,7 +202,7 @@ read_midi_track(MidiTrack *track, MidiPatch *patches, int chan_patch[16], FILE *
 		track->num_events++;
 
 		track->events = realloc(track->events, track->num_events * sizeof(MidiEvent *));
-		if(!track->events) {
+		if(track->events == NULL) {
 			fprintf(stderr, "Out of memory.\n");
 			return 1;
 		}
@@ -284,6 +295,10 @@ get_midi_event(MidiEvent *event, MidiPatch *patches, int chan_patch[16], const u
 		   event->meta_type <= MIDI_META_CUEPOINT) { //
 			event->data_length = command_length;
 			event->data = calloc(command_length + 1, sizeof(uint8_t));
+			if (event->data == NULL) {
+				fprintf(stderr, "Out of memory.\n");
+				return 1;
+			}
 
 			memcpy(event->data, head, command_length);
 			event->data[command_length] = 0;
