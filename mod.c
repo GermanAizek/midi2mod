@@ -28,11 +28,11 @@ compare_absolute_midi_event(const void *a, const void *b)
 int
 midi_to_mod(Mod *mod, const Midi *midi)
 {
-	int i, j, k;
-	long int current_time;
+	size_t i, j, k;
+	size_t current_time;
 	int current_pattern;
 	int current_channel;
-	long int total_events;
+	size_t total_events;
 	ModCommand command;
 	AbsoluteMidiEvent *events;
 	MidiEvent *event;
@@ -165,7 +165,8 @@ midi_to_mod(Mod *mod, const Midi *midi)
 				// event->data
 			} else if(event->meta_type == MIDI_META_SETTEMPO) {
 				// event->tempo
-				tempo = 1.0/event->tempo * 60000000;
+				tempo = (1.0f/event->tempo) * 60000000;
+				fprintf(stderr, "Output tempo %"PRIu8"\n", tempo);
 
 				current_channel = -1;
 				for(j=0; j < mod->num_channels; j++) {
@@ -271,7 +272,7 @@ write_mod_file(Mod *mod, FILE *outfile)
 		fwrite(&v, sizeof(uint8_t), 1, outfile);
 		fwrite(&v, sizeof(uint8_t), 1, outfile);
 		for(d=2; d<16574; d++) {
-			v = 128 * sin((1.0*d/16574)*2*3.14159 * 1024);
+			v = 128 * sin((1.0f * d / 16574) * 2 * M_PI * 1024);
 			//printf("%d\n", v);
 			fwrite(&v, sizeof(uint8_t), 1, outfile);
 		}

@@ -11,7 +11,7 @@ typedef struct {
 	char *value;
 } StringEntry;
 
-const char *get_string(int key, const StringEntry *catalog, int catalog_length);
+const char *get_string(int key, const StringEntry *catalog, size_t catalog_length);
 
 #endif /* STRINGCATALOG_H */
 

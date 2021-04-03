@@ -62,7 +62,7 @@ int
 read_midi_from_file(Midi *midi, FILE *infile)
 {
 	MidiTrack *track;
-	int i;
+	size_t i;
 	int chan_patch[16];
 
     if (read_midi_header(midi, infile)) {
@@ -207,7 +207,7 @@ read_midi_track(MidiTrack *track, MidiPatch *patches, int chan_patch[16], FILE *
 			return 1;
 		}
 
-		track->events[track->num_events - 1] = event;
+		track->events[(size_t)track->num_events - 1] = event;
 
 		head += event_length;
 	}
@@ -262,7 +262,7 @@ get_midi_event(MidiEvent *event, MidiPatch *patches, int chan_patch[16], const u
 			event->note = *head;
 			event->velocity = *(head+1);
 
-			patch = &patches[chan_patch[event->channel]];
+			patch = &patches[(size_t)chan_patch[event->channel]];
 			if(event->note < patch->min || !patch->min)
 				patch->min = event->note;
 
@@ -301,9 +301,10 @@ get_midi_event(MidiEvent *event, MidiPatch *patches, int chan_patch[16], const u
 			}
 
 			memcpy(event->data, head, command_length);
-			event->data[command_length] = 0;
+			event->data[(size_t)command_length] = 0;
 		} else if(event->meta_type == MIDI_META_SETTEMPO) {
 			event->tempo = 0 | *head << 16 | *(head+1) << 8 | *(head+2);
+			//fprintf(stderr, "Midi read tempo %"PRIu32"\n", event->tempo);
 		} else if(event->meta_type == MIDI_META_TIMESIGNATURE) {
 			event->time_signature.numerator = *head;
 			event->time_signature.denominator = 0x01 << *(head+1);  // 2^(*(head+1))
@@ -360,7 +361,7 @@ get_vl_quantity(uint32_t *q, const uint8_t *head)
 void
 destroy_midi(Midi *midi)
 {
-	int i;
+	size_t i;
 	for(i=0; i < midi->num_tracks; i++) {
 		if(midi->tracks[i])
 			destroy_midi_track(midi->tracks[i]);
@@ -372,7 +373,7 @@ destroy_midi(Midi *midi)
 void
 destroy_midi_track(MidiTrack *track)
 {
-	int i;
+	size_t i;
 	for(i=0; i < track->num_events; i++) {
 		destroy_midi_event(track->events[i]);
 	}
