@@ -391,28 +391,28 @@ void
 print_midi_event(FILE *outfile, const MidiEvent *event)
 {
 	if(event->type == MIDI_EVENT) {
-		fprintf(outfile, "Midi event:\t%d,\t%s,\t%d", event->delta_time, get_midi_event_command_string(event->command), event->channel);
+		fprintf(outfile, "Midi event:\t%"PRIu32",\t%s,\t%"PRIu8"", event->delta_time, get_midi_event_command_string(event->command), event->channel);
 
 		if(event->command == MIDI_NOTEOFF ||
 		   event->command == MIDI_NOTEON ||
 		   event->command == MIDI_KEYAFTERTOUCH) {
-			fprintf(outfile, ",\tNote:  %s (%d)", midi_note_string(event->note), event->velocity);
+			fprintf(outfile, ",\tNote:  %s (%"PRIu8")", midi_note_string(event->note), event->velocity);
 		} else if(event->command == MIDI_PATCHCHANGE) {
-			fprintf(outfile, ",\tPatch:  %d", event->patch);
+			fprintf(outfile, ",\tPatch:  %"PRIu8"", event->patch);
 		}
 
 		fprintf(outfile, "\n");
 	} else if (event->type == MIDI_EVENT_META) {
-		fprintf(outfile, "Meta event:\t%d,\t%s", event->delta_time, get_midi_meta_command_string(event->meta_type));
+		fprintf(outfile, "Meta event:\t%"PRIu32",\t%s", event->delta_time, get_midi_meta_command_string(event->meta_type));
 
 		// Text event.
 		if(event->meta_type >= MIDI_META_TEXT &&
 		   event->meta_type <= MIDI_META_CUEPOINT) {
 			fprintf(outfile, ",\t%s", event->data);
 		} else if(event->meta_type == MIDI_META_SETTEMPO) {
-			fprintf(outfile, ",\t%d microseconds/quarter note", event->tempo);
+			fprintf(outfile, ",\t%"PRIu32" microseconds/quarter note", event->tempo);
 		} else if(event->meta_type == MIDI_META_TIMESIGNATURE) {
-			fprintf(outfile, ",\t%d/%d, %d ticks per beat, %d 32nd notes per beat.",
+			fprintf(outfile, ",\t%"PRIu8"/%"PRIu8", %"PRIu8" ticks per beat, %"PRIu8" 32nd notes per beat.",
 				event->time_signature.numerator,
 				event->time_signature.denominator,
 				event->time_signature.ticks_per_click,
@@ -421,9 +421,9 @@ print_midi_event(FILE *outfile, const MidiEvent *event)
 
 		fprintf(outfile, "\n");
 	} else if (event->type == MIDI_EVENT_SYSEX) {
-		fprintf(outfile, "Sysex event:\t%d,\t%x\n", event->delta_time, event->command);
+		fprintf(outfile, "Sysex event:\t%"PRIu32",\t%"PRIu8"\n", event->delta_time, event->command);
 	} else {
-		fprintf(outfile, "Unknown event:\t%d,\t%d,\t%x\n", event->delta_time, event->type, event->command);
+		fprintf(outfile, "Unknown event:\t%"PRIu32",\t%"PRIu8",\t%"PRIu8"\n", event->delta_time, event->type, event->command);
 	}
 }
 

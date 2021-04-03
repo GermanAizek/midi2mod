@@ -7,9 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include "midi.h"
 #include "mod.h"
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 #ifdef _WIN32
 #include "winsock2.h"
@@ -274,12 +276,12 @@ write_mod_file(Mod *mod, FILE *outfile)
 			fwrite(&v, sizeof(uint8_t), 1, outfile);
 		}
 	}
-	for(i=8; i<31; i++) {
+	for(i = 8; i < 31; i++) {
 		int8_t v = 0;
 		fwrite(&v, sizeof(uint8_t), 1, outfile);
 		fwrite(&v, sizeof(uint8_t), 1, outfile);
-		for(d=2; d<16574; d++) {
-			v = 128 * sin((1.0*d/16574)*2*3.14159 * 2048);
+		for (d = 2; d < 16574; d++) {
+			v = 128 * sin((1.0 * d / 16574) * 2 * M_PI * 2048);
 			//printf("%d\n", v);
 			fwrite(&v, sizeof(uint8_t), 1, outfile);
 		}
