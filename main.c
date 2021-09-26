@@ -4,10 +4,8 @@
 
 int main(int argc, char **argv)
 {
-    FILE* infile;
-    fopen_s(&infile, argv[1], "rb");
-    FILE* outfile;
-    fopen_s(&outfile, "test.mod", "wb");
+    FILE* infile = fopen(argv[1], "rb");
+    FILE* outfile = fopen("test.mod", "wb");
 
     Midi midi;
     if (read_midi_from_file(&midi, infile)) {

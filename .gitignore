@@ -1,0 +1,7 @@
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+midi2mod
+*.mod
+*.midi

@@ -36,7 +36,7 @@ midi_to_mod(Mod *mod, const Midi *midi)
 	ModCommand command;
 	AbsoluteMidiEvent *events;
 	MidiEvent *event;
-	short unsigned int ticks_per_beat = 64;
+	short unsigned int ticks_per_beat = 4;
 	uint8_t tempo;
 	short int division;
 	char *channel_occupied; // For tracking whether or not a channel is free to play a note.
