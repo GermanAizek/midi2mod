@@ -4,8 +4,22 @@
 
 int main(int argc, char **argv)
 {
-    FILE* infile = fopen(argv[1], "rb");
-    FILE* outfile = fopen("test.mod", "wb");
+    char* outfile_name = "test.mod";
+    if (argc > 2) {
+        outfile_name = argv[2];
+    }
+
+    FILE* infile;
+    FILE* outfile;
+
+    #ifdef _WIN32
+    fopen_s(&infile, argv[1], "rb");
+    fopen_s(&outfile, outfile_name, "wb");
+    #else
+    infile = fopen(argv[1], "rb");
+    outfile = fopen(outfile_name, "wb");
+    #endif
+
 
     Midi midi;
     if (read_midi_from_file(&midi, infile)) {
