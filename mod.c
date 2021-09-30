@@ -37,6 +37,13 @@ midi_to_mod(Mod *mod, const Midi *midi)
 	AbsoluteMidiEvent *events;
 	MidiEvent *event;
 	short unsigned int ticks_per_beat = 64;
+	char* env_ticks_per_beat = getenv("TICKS_PER_BEAT");
+	if (env_ticks_per_beat != NULL) {
+		int custom_ticks_per_beat = atoi(env_ticks_per_beat);
+		if (custom_ticks_per_beat > 0) {
+			ticks_per_beat = custom_ticks_per_beat;
+		}
+	}
 	uint8_t tempo;
 	short int division;
 	char *channel_occupied; // For tracking whether or not a channel is free to play a note.
