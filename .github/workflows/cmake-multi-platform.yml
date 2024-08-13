@@ -73,3 +73,16 @@ jobs:
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
+
+    
+
+    - name: Commit build artefacts
+      # You may pin to the exact commit or the version.
+      # uses: mutoco/commit-build-artefacts-action@86777b524c6ebf32a20f664ba0475992f1640f99
+      uses: mutoco/commit-build-artefacts-action@0.5.1
+      with:
+        # Committer email
+        committer_email: GermanAizek@yandex.ru
+        # Committer name
+        committer_name: Herman Semenov
+          
