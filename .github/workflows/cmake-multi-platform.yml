@@ -76,13 +76,6 @@ jobs:
 
     
 
-    - name: Commit build artefacts
-      # You may pin to the exact commit or the version.
-      # uses: mutoco/commit-build-artefacts-action@86777b524c6ebf32a20f664ba0475992f1640f99
-      uses: mutoco/commit-build-artefacts-action@0.5.1
-      with:
-        # Committer email
-        committer_email: GermanAizek@yandex.ru
-        # Committer name
-        committer_name: Herman Semenov
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.6
           
