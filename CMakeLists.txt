@@ -12,6 +12,7 @@ endif()
 
 if(UNIX)
     set(CMAKE_C_FLAGS "-lm")
+    target_link_libraries(midi2mod m) 
 endif()
 
 if(WIN32)
