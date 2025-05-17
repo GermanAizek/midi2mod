@@ -66,7 +66,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }}-${{ matrix.build_type }} --config ${{ matrix.build_type }}
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }}-${{ matrix.os }}-${{ matrix.build_type }} --config ${{ matrix.build_type }}
 
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
@@ -79,5 +79,6 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        path: ${{ steps.strings.outputs.build-output-dir }}-${{ matrix.build_type }}
+        name: midi2mod-${{ matrix.os }}-${{ matrix.c_compiler }}
+        path: ${{ steps.strings.outputs.build-output-dir }}-${{ matrix.os }}-${{ matrix.build_type }}
           
