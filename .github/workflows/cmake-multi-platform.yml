@@ -79,5 +79,5 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        path: midi2mod
+        path: ${{ steps.strings.outputs.build-output-dir }}
           
